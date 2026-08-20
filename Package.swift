@@ -34,6 +34,14 @@ let package = Package(
                 .process("Resources")
             ]
         ),
+        .testTarget(
+            name: "STMarkdownTests",
+            dependencies: [
+                .target(name: "STMarkdown"),
+                .product(name: "STBaseProject", package: "STBaseProject")
+            ],
+            path: "Tests/STMarkdownTests"
+        ),
     ],
     swiftLanguageVersions: [.v5]
 )
