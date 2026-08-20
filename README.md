@@ -26,6 +26,7 @@ STMarkdown 是一个面向 iOS 16+ 的高保真、流式 Markdown 渲染框架�
 - [架构概览 | Architecture](#architecture)
 - [流式渲染机制 | Streaming Internals](#streaming-internals)
 - [高度稳定 | Height Stability](#height-stability)
+- [分支联动工具 | Branch Sync](#branch-sync)
 - [许可证 | License](#license)
 
 <a id="features"></a>
@@ -211,6 +212,51 @@ let renderers = STMarkdownPresets.makeDefaultAdvancedRenderers()
 - 宽度来源优先级：`preferredContentWidth` → `bounds.width` → `textView` 宽度 → `window` 宽度 → 屏幕宽度。
 - 高度变化通过 `onContentLayoutHeightChange` 回调通知，受 `contentLayoutHeightNotificationThreshold`（默认 9pt）与最小间隔约束，并抑制瞬时 0 高度。
 - 动画只改 `foregroundColor.alpha`，追加/替换内容时保存并恢复 `contentOffset`，避免跳动。
+
+<a id="branch-sync"></a>
+## 🔗 分支联动工具 | Branch Sync
+
+STMarkdown 通过**本地路径**依赖 STBaseProject（`Package.swift` 中 `path: "../STBaseProject"`），因此 STMarkdown 直接使用 STBaseProject 本地仓库的当前 git 状态。为避免两个仓库分支不一致导致用错代码，仓库内置了分支联动工具：
+
+- `gsync.sh` — 手动同步脚本
+- `scripts/post-checkout` — git hook，切分支时自动联动
+
+### 分支对应规则
+
+STMarkdown 的**任意分支** ↔ STBaseProject 的**同名分支**（如 `feature_2.0.0 ↔ feature_2.0.0`、`main ↔ main`，新增分支自动同名对应）。
+
+### 启用自动联动（协作者 clone 后执行一次）
+
+```bash
+cd STMarkdown
+git config core.hooksPath scripts
+```
+
+此后 `git checkout <branch>` / `git switch <branch>` 会自动把 STBaseProject 同步到同名分支。
+
+### 手动使用
+
+```bash
+./gsync.sh                 # 查看两个仓库当前分支
+./gsync.sh <branch>        # 切换两个仓库到同一分支
+./gsync.sh -b <branch>     # 新建并切换（两边同步创建同名分支）
+./gsync.sh auto            # 把 STBaseProject 对齐到 STMarkdown 当前分支
+```
+
+### 自定义 STBaseProject 位置
+
+默认假定 STBaseProject 位于 STMarkdown 的**同级目录**（`../STBaseProject`）。若布局不同，用环境变量 `STBASE_PATH` 指定：
+
+```bash
+STBASE_PATH=/path/to/STBaseProject ./gsync.sh <branch>
+STBASE_PATH=/path/to/STBaseProject git checkout <branch>   # hook 会自动透传
+```
+
+### 临时禁用联动
+
+```bash
+STBASE_DISABLE_SYNC=1 git checkout <branch>
+```
 
 <a id="license"></a>
 ## 📄 许可证 | License
