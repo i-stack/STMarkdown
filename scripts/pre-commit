@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+# pre-commit — 拦截向受保护分支的直接提交（本地提醒，需配合远端分支保护规则）
+#
+# 受保护分支：main、feature_2.0.0
+# 若当前在受保护分支上执行 git commit，本 hook 以非零退出阻止提交。
+#
+# 注意：
+#   - 本 hook 仅在本机生效，协作者需启用 core.hooksPath=scripts 才有。
+#   - 真正的强控来自远端分支保护规则（禁止直接 push 到受保护分支）。
+#   - 可用 `git commit --no-verify` 绕过本 hook（不推荐）。
+
+set -uo pipefail
+
+BRANCH="$(git rev-parse --abbrev-ref HEAD 2>/dev/null || echo "(unknown)")"
+
+# 受保护分支列表
+PROTECTED=" main feature_2.0.0 "
+
+if [ "${PROTECTED#* ${BRANCH} }" != "$PROTECTED" ]; then
+  echo "❌ 分支 '$BRANCH' 受保护，禁止直接 commit。" >&2
+  echo "   请新建功能分支（如 git checkout -b feature/your-work）再提交。" >&2
+  echo "   若确需绕过本本地检查：git commit --no-verify（但仍会被远端分支保护拦截）" >&2
+  exit 1
+fi
+
+exit 0
