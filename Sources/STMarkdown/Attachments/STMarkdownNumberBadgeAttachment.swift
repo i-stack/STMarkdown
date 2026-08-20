@@ -73,9 +73,6 @@ public final class STMarkdownNumberBadgeAttachment: NSTextAttachment {
     }
 }
 
-/// 旧名称兼容：后续新代码请使用 `STMarkdownNumberBadgeAttachment`。
-public typealias STMarkdownCircleNumberAttachment = STMarkdownNumberBadgeAttachment
-
 private extension STMarkdownNumberBadgeAttachment {
     /// 缓存 key：四元组（数字文本、前景色、背景色、直径）全匹配才能命中。
     /// 颜色通过 `UIColor.cgColor` 的 `CFHash` 生成稳定 hash，避免 `UIColor.==`

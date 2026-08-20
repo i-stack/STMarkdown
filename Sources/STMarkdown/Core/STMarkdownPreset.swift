@@ -26,11 +26,6 @@ public enum STMarkdownPresets {
         )
     }
 
-    @available(*, deprecated, message: "Use makeDefaultAdvancedRenderers() to avoid sharing renderer instances.")
-    public static var defaultAdvancedRenderers: STMarkdownAdvancedRenderers {
-        self.makeDefaultAdvancedRenderers()
-    }
-
     public static var article: STMarkdownStyle {
         let font = UIFont.st_preferredFont(ofSize: 17, forTextStyle: .body)
         return STMarkdownStyle(

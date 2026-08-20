@@ -1,0 +1,49 @@
+# 库仓 CI：旧 API 守护 + SPM 构建烟囱测试。
+# 风格对齐 STBaseProject/.github/workflows/swift.yml。
+#
+# 注意：本包通过本地 path 依赖 ../STBaseProject（见 Package.swift），
+# 因此 CI 上需将 STBaseProject 仓库 checkout 到同级 ../STBaseProject 目录才能 resolve/build。
+# 用 input 暴露仓库地址，默认指向 i-stack/STBaseProject（按实际 org 调整）。
+
+name: Swift
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    runs-on: macos-15
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: STMarkdown
+
+      # STMarkdown 依赖本地 ../STBaseProject，需一并 checkout 到同级目录。
+      - name: Checkout STBaseProject (local path dependency)
+        uses: actions/checkout@v4
+        with:
+          repository: i-stack/STBaseProject
+          path: STBaseProject
+          ref: ${{ github.base_ref || 'main' }}
+
+      - name: Select Xcode
+        run: bash "${GITHUB_WORKSPACE}/STMarkdown/.github/select_xcode_ci.sh"
+
+      - name: Check removed APIs
+        run: bash STMarkdown/.github/check_removed_api.sh
+
+      - name: Resolve SPM dependencies
+        run: xcodebuild -resolvePackageDependencies -scheme STMarkdown
+
+      - name: Build (iOS Simulator) with compile log
+        run: |
+          rm -rf ~/Library/Developer/Xcode/DerivedData
+          xcodebuild \
+            -scheme STMarkdown \
+            -destination 'generic/platform=iOS Simulator' \
+            clean build | tee xcodebuild.log

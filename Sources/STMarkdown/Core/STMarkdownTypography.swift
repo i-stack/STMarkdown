@@ -153,17 +153,13 @@ public enum STMarkdownListStyleResolver {
 
     /// 为列表项的"后续行 / 续段"统一缩进。
     ///
-    /// - Parameters:
-    ///   - firstLineIndent: 列表项首行（marker 所在行）的左缩进。仅保留参数以兼容旧 API；
-    ///     续行段落真正使用的是 `contentIndent`，从而保证视觉上与正文对齐。
-    ///   - contentIndent: 正文起点缩进，续行的 `firstLineHeadIndent` / `headIndent` 均对齐于此。
+    /// - Parameter contentIndent: 正文起点缩进，续行的
+    ///   `firstLineHeadIndent` / `headIndent` 均对齐于此。
     public static func applyContinuationIndent(
         to attributed: NSMutableAttributedString,
-        firstLineIndent: CGFloat,
         contentIndent: CGFloat,
         style: STMarkdownStyle
     ) {
-        _ = firstLineIndent // 保留以兼容旧调用方；续段以 contentIndent 为准。
         let string = attributed.string as NSString
         var location = 0
         while location < attributed.length {
