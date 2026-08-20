@@ -15,6 +15,39 @@ public enum STMarkdownRawHTMLPolicy: Sendable, Hashable {
     case literalMonospace
 }
 
+/// Markdown 正文字体的可重解析语义，用于内容大小类别变化后重新生成富文本。
+public struct STMarkdownDynamicTypeConfiguration: Sendable, Hashable {
+    public var basePointSize: CGFloat
+    public var textStyle: UIFont.TextStyle
+    public var weight: UIFont.Weight
+    public var maximumPointSize: CGFloat?
+    public var minimumLineHeight: CGFloat
+
+    public init(
+        basePointSize: CGFloat,
+        textStyle: UIFont.TextStyle = .body,
+        weight: UIFont.Weight = .regular,
+        maximumPointSize: CGFloat? = nil,
+        minimumLineHeight: CGFloat
+    ) {
+        self.basePointSize = basePointSize
+        self.textStyle = textStyle
+        self.weight = weight
+        self.maximumPointSize = maximumPointSize
+        self.minimumLineHeight = minimumLineHeight
+    }
+
+    public func font(compatibleWith traitCollection: UITraitCollection) -> UIFont {
+        UIFont.st_preferredFont(
+            ofSize: self.basePointSize,
+            forTextStyle: self.textStyle,
+            weight: self.weight,
+            maxSize: self.maximumPointSize,
+            compatibleWith: traitCollection
+        )
+    }
+}
+
 /// Markdown 样式配置。
 ///
 /// - Note: 含有大量 `UIColor` / `UIFont` / `UIEdgeInsets` 字段。UIKit 官方并未将其声明为
@@ -23,6 +56,8 @@ public enum STMarkdownRawHTMLPolicy: Sendable, Hashable {
 ///   调用方务必确保自定义闭包捕获的状态亦满足 `Sendable`。
 public struct STMarkdownStyle: @unchecked Sendable {
     public var font: UIFont
+    /// 非空时，视图会在 Dynamic Type 类别变化后按该语义重新解析正文并重渲染。
+    public var dynamicTypeConfiguration: STMarkdownDynamicTypeConfiguration?
     /// 加粗字体（nil 时由 STMarkdownFontResolver.boldFont(from: font) 自动推导）
     public var boldFont: UIFont?
     /// 加粗文本颜色（nil 时沿用 textColor）
@@ -158,6 +193,7 @@ public struct STMarkdownStyle: @unchecked Sendable {
 
     public init(
         font: UIFont,
+        dynamicTypeConfiguration: STMarkdownDynamicTypeConfiguration? = nil,
         boldFont: UIFont? = nil,
         boldTextColor: UIColor? = nil,
         textColor: UIColor,
@@ -236,6 +272,7 @@ public struct STMarkdownStyle: @unchecked Sendable {
         streamSpeculativeRewriteEnabled: Bool = false
     ) {
         self.font = font
+        self.dynamicTypeConfiguration = dynamicTypeConfiguration
         self.boldFont = boldFont
         self.boldTextColor = boldTextColor
         self.textColor = textColor
@@ -318,10 +355,28 @@ public struct STMarkdownStyle: @unchecked Sendable {
         let font = UIFont.st_preferredFont(ofSize: 16, forTextStyle: .body)
         return STMarkdownStyle(
             font: font,
+            dynamicTypeConfiguration: STMarkdownDynamicTypeConfiguration(
+                basePointSize: 16,
+                textStyle: .body,
+                minimumLineHeight: 24
+            ),
             textColor: .label,
             lineHeight: max(24, ceil(font.lineHeight)),
             kern: 0.12
         )
+    }
+
+    public func resolvedForDynamicType(
+        compatibleWith traitCollection: UITraitCollection
+    ) -> STMarkdownStyle {
+        guard let configuration = self.dynamicTypeConfiguration else { return self }
+        var resolved = self
+        resolved.font = configuration.font(compatibleWith: traitCollection)
+        resolved.lineHeight = max(
+            configuration.minimumLineHeight,
+            ceil(resolved.font.lineHeight)
+        )
+        return resolved
     }
 
     public var resolvedDisplayScale: CGFloat {

@@ -205,6 +205,36 @@ public class STMarkdownBaseTextView: UIView, STMarkdownInteractable {
         }
     }
 
+    public override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+        super.traitCollectionDidChange(previousTraitCollection)
+        guard previousTraitCollection?.preferredContentSizeCategory
+                != self.traitCollection.preferredContentSizeCategory else {
+            return
+        }
+        self.refreshDynamicType(compatibleWith: self.traitCollection)
+    }
+
+    /// 按指定 trait 重新解析字体语义、重建富文本，并使高度缓存失效。
+    /// 系统内容大小类别变化时会自动调用；宿主也可在自定义 trait 容器中显式触发。
+    public func refreshDynamicType(compatibleWith traitCollection: UITraitCollection? = nil) {
+        guard self.markdownStyle.dynamicTypeConfiguration != nil else { return }
+        let traits = traitCollection ?? self.traitCollection
+        let resolvedStyle = self.markdownStyle.resolvedForDynamicType(
+            compatibleWith: traits
+        )
+        self.isApplyingConfiguration = true
+        self.markdownStyle = resolvedStyle
+        self.isApplyingConfiguration = false
+        self.textView.font = resolvedStyle.font
+        self.textView.textColor = resolvedStyle.textColor
+        self.rebuildRenderer()
+        if self.rawMarkdown.isEmpty == false {
+            self.configurationDidChangeRerender()
+        } else {
+            self.invalidateIntrinsicContentSize()
+        }
+    }
+
     public func sizeThatFitsMarkdown(width: CGFloat) -> CGSize {
         let size = self.textView.sizeThatFits(
             CGSize(width: width, height: .greatestFiniteMagnitude)

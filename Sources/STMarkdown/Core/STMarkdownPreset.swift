@@ -35,6 +35,11 @@ public enum STMarkdownPresets {
         let font = UIFont.st_preferredFont(ofSize: 17, forTextStyle: .body)
         return STMarkdownStyle(
             font: font,
+            dynamicTypeConfiguration: STMarkdownDynamicTypeConfiguration(
+                basePointSize: 17,
+                textStyle: .body,
+                minimumLineHeight: 26
+            ),
             textColor: UIColor.label,
             lineHeight: max(26, ceil(font.lineHeight)),
             kern: 0.1,
@@ -65,6 +70,11 @@ public enum STMarkdownPresets {
         let font = UIFont.st_preferredFont(ofSize: 14, forTextStyle: .subheadline)
         return STMarkdownStyle(
             font: font,
+            dynamicTypeConfiguration: STMarkdownDynamicTypeConfiguration(
+                basePointSize: 14,
+                textStyle: .subheadline,
+                minimumLineHeight: 20
+            ),
             textColor: UIColor.label,
             lineHeight: max(20, ceil(font.lineHeight)),
             kern: 0.08,
