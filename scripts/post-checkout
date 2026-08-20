@@ -1,0 +1,64 @@
+#!/bin/bash
+#
+# post-checkout — STMarkdown 自动联动 STBaseProject 分支（可共享版本）
+#
+# 触发时机：git checkout / git switch 完成后。
+# 参数：$1=旧 HEAD  $2=新 HEAD  $3=flag（1=切到分支，0=仅恢复文件）
+#
+# 行为：
+#   当 STMarkdown 切换到某个分支（$3 == 1）时，自动把本地路径依赖的
+#   STBaseProject 同步到同名分支。分支对应规则：同名对应。
+#
+# 启用方式（协作者 clone 后执行一次）：
+#   git config core.hooksPath scripts
+#   或把本文件复制/软链到 .git/hooks/post-checkout
+#
+# 控制：
+#   设置环境变量 STBASE_DISABLE_SYNC=1 可临时禁用本次联动。
+#   设置环境变量 STBASE_PATH=/path/to/STBaseProject 可覆盖 STBaseProject 位置。
+
+set -uo pipefail
+
+PREV_HEAD="$1"
+NEW_HEAD="$2"
+IS_BRANCH="$3"
+
+# 仅当切到分支（而非文件恢复 / detached）时联动
+if [ "$IS_BRANCH" != "1" ]; then
+  exit 0
+fi
+
+# 临时禁用开关
+if [ "${STBASE_DISABLE_SYNC:-}" = "1" ]; then
+  echo "ℹ️  STBASE_DISABLE_SYNC=1，跳过 STBaseProject 联动。"
+  exit 0
+fi
+
+# 防递归：若已由本 hook 触发的子调用进入，则不再二次触发
+if [ "${STBASE_IN_HOOK:-}" = "1" ]; then
+  exit 0
+fi
+
+# 仓库根目录：post-checkout 位于 $REPO/scripts/post-checkout
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+GSH_PATH="$SCRIPT_DIR/gsync.sh"
+
+if [ ! -f "$GSH_PATH" ]; then
+  echo "⚠️  未找到 gsync.sh（$GSH_PATH），跳过联动。"
+  exit 0
+fi
+
+export STBASE_IN_HOOK=1
+# 透传 STBASE_PATH 给 gsync.sh，使自定义布局也生效
+if [ -n "${STBASE_PATH:-}" ]; then
+  export STBASE_PATH
+fi
+
+if "$GSH_PATH" auto; then
+  exit 0
+else
+  echo "⚠️  STBaseProject 联动失败（详见上方错误）。STMarkdown 已切到目标分支，但 STBaseProject 未同步。" >&2
+  echo "    可手动执行：STBASE_PATH=<路径> ./gsync.sh auto" >&2
+  echo "    或临时跳过：STBASE_DISABLE_SYNC=1 git checkout <分支>" >&2
+  exit 1
+fi
