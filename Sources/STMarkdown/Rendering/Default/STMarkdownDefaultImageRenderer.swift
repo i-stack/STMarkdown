@@ -37,7 +37,7 @@ private extension STMarkdownDefaultImageRenderer {
     }
 
     func renderInlineImage(label: String, style: STMarkdownStyle) -> NSAttributedString {
-        let font = UIFont.st_systemFont(ofSize: max(style.font.pointSize - 1, 12), weight: .medium)
+        let font = UIFont.st_preferredFont(ofSize: max(style.font.pointSize - 1, 12), weight: .medium)
         let attachment = NSTextAttachment()
         let tint = style.imagePlaceholderTextColor ?? style.textColor.withAlphaComponent(0.88)
         let placeholder = UIImage(systemName: "photo")?.withTintColor(tint, renderingMode: .alwaysOriginal)
@@ -77,7 +77,7 @@ private extension STMarkdownDefaultImageRenderer {
             NSAttributedString(
                 string: "\n\(label)",
                 attributes: [
-                    .font: UIFont.st_systemFont(ofSize: style.font.pointSize, weight: .medium),
+                    .font: UIFont.st_preferredFont(ofSize: style.font.pointSize, weight: .medium),
                     .foregroundColor: style.imagePlaceholderTextColor ?? style.textColor,
                     .backgroundColor: style.imagePlaceholderBackgroundColor ?? UIColor.tertiarySystemBackground,
                     .paragraphStyle: paragraphStyle,
@@ -90,7 +90,7 @@ private extension STMarkdownDefaultImageRenderer {
                 NSAttributedString(
                     string: "\n\(title)",
                     attributes: [
-                        .font: UIFont.st_systemFont(ofSize: max(style.font.pointSize - 2, 12), weight: .regular),
+                        .font: UIFont.st_preferredFont(ofSize: max(style.font.pointSize - 2, 12), weight: .regular),
                         .foregroundColor: style.imagePlaceholderCaptionColor ?? style.textColor.withAlphaComponent(0.72),
                         .paragraphStyle: paragraphStyle,
                     ]

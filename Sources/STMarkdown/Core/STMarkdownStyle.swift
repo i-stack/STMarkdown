@@ -314,12 +314,15 @@ public struct STMarkdownStyle: @unchecked Sendable {
         self.streamSpeculativeRewriteEnabled = streamSpeculativeRewriteEnabled
     }
 
-    public static let `default` = STMarkdownStyle(
-        font: UIFont.st_preferredFont(ofSize: 16, forTextStyle: .body),
-        textColor: .label,
-        lineHeight: 24,
-        kern: 0.12
-    )
+    public static var `default`: STMarkdownStyle {
+        let font = UIFont.st_preferredFont(ofSize: 16, forTextStyle: .body)
+        return STMarkdownStyle(
+            font: font,
+            textColor: .label,
+            lineHeight: max(24, ceil(font.lineHeight)),
+            kern: 0.12
+        )
+    }
 
     public var resolvedDisplayScale: CGFloat {
         if self.displayScale > 0 { return self.displayScale }

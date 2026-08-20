@@ -20,7 +20,7 @@ public final class STMarkdownCodeBlockMarkerInfo: NSObject {
         self.style = style
         self.contentInsets = style.codeBlockContentInsets
         let autoHeight = max(
-            ceil(UIFont.st_monospacedSystemFont(
+            ceil(UIFont.st_preferredMonospacedFont(
                 ofSize: max(style.font.pointSize - 2, 12),
                 weight: .semibold
             ).lineHeight),

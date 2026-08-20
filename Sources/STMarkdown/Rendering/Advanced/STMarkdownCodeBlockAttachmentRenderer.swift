@@ -21,8 +21,8 @@ public struct STMarkdownCodeBlockAttachmentRenderer: STMarkdownCodeBlockRenderin
 
 private extension STMarkdownCodeBlockAttachmentRenderer {
     func renderAttachmentImage(language: String?, code: String, style: STMarkdownStyle) -> UIImage {
-        let headerFont = UIFont.st_monospacedSystemFont(ofSize: max(style.font.pointSize - 2, 12), weight: .semibold)
-        let codeFont = UIFont.st_monospacedSystemFont(ofSize: max(style.font.pointSize - 1, 12), weight: .regular)
+        let headerFont = UIFont.st_preferredMonospacedFont(ofSize: max(style.font.pointSize - 2, 12), weight: .semibold)
+        let codeFont = UIFont.st_preferredMonospacedFont(ofSize: max(style.font.pointSize - 1, 12), weight: .regular)
         let insets = style.codeBlockContentInsets
         let cornerRadius = style.codeBlockCornerRadius
         let blockWidth: CGFloat

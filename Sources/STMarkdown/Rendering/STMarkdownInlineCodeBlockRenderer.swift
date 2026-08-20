@@ -49,11 +49,11 @@ public struct STMarkdownInlineCodeBlockRenderer {
         let contentInsets = style.codeBlockContentInsets
         let backgroundColor = style.codeBlockBackgroundColor ?? UIColor.secondarySystemBackground
         let headerColor = style.codeBlockHeaderTextColor ?? style.textColor.withAlphaComponent(0.72)
-        let headerFont = UIFont.st_monospacedSystemFont(
+        let headerFont = UIFont.st_preferredMonospacedFont(
             ofSize: max(style.font.pointSize - 2, 12),
             weight: .semibold
         )
-        let codeFont = UIFont.st_monospacedSystemFont(
+        let codeFont = UIFont.st_preferredMonospacedFont(
             ofSize: max(style.font.pointSize - 1, 12),
             weight: .regular
         )

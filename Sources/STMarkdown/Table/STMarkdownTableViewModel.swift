@@ -55,9 +55,9 @@ public final class STMarkdownTableViewModel {
         )
 
         let headerFont = style.tableHeaderFont
-            ?? UIFont.st_systemFont(ofSize: max(style.font.pointSize - 1, 12), weight: .semibold)
+            ?? UIFont.st_preferredFont(ofSize: max(style.font.pointSize - 1, 12), weight: .semibold)
         let bodyFont = style.tableFont
-            ?? UIFont.st_systemFont(ofSize: max(style.font.pointSize - 1, 12), weight: .regular)
+            ?? UIFont.st_preferredFont(ofSize: max(style.font.pointSize - 1, 12), weight: .regular)
         let headerTextColor = style.tableHeaderTextColor ?? style.textColor
         let bodyTextColor = style.tableTextColor ?? style.textColor
 

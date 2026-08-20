@@ -8,7 +8,7 @@
 import UIKit
 
 public enum STMarkdownPresets {
-    public static let `default` = STMarkdownStyle.default
+    public static var `default`: STMarkdownStyle { STMarkdownStyle.default }
 
     /// 构造一组默认的高级渲染器实例。
     ///
@@ -31,57 +31,63 @@ public enum STMarkdownPresets {
         self.makeDefaultAdvancedRenderers()
     }
 
-    public static let article = STMarkdownStyle(
-        font: UIFont.st_preferredFont(ofSize: 17, forTextStyle: .body),
-        textColor: UIColor.label,
-        lineHeight: 26,
-        kern: 0.1,
-        paragraphSpacing: 10,
-        bodyLineSpacing: 3,
-        headingTextColor: UIColor.label,
-        linkColor: UIColor.systemBlue,
-        inlineCodeTextColor: UIColor.secondaryLabel,
-        codeBlockTextColor: UIColor.label,
-        codeBlockHeaderTextColor: UIColor.secondaryLabel,
-        codeBlockBackgroundColor: UIColor.secondarySystemBackground,
-        tableTextColor: UIColor.label,
-        tableHeaderTextColor: UIColor.label,
-        tableBorderColor: UIColor.separator,
-        tableBackgroundColor: UIColor.secondarySystemBackground,
-        imagePlaceholderTextColor: UIColor.label,
-        imagePlaceholderBackgroundColor: UIColor.tertiarySystemBackground,
-        imagePlaceholderCaptionColor: UIColor.secondaryLabel,
-        horizontalRuleColor: UIColor.separator,
-        horizontalRuleLength: 24,
-        listItemSpacing: 10,
-        listIndentPerLevel: 16,
-        headingLineHeightMultiplier: 1.25
-    )
+    public static var article: STMarkdownStyle {
+        let font = UIFont.st_preferredFont(ofSize: 17, forTextStyle: .body)
+        return STMarkdownStyle(
+            font: font,
+            textColor: UIColor.label,
+            lineHeight: max(26, ceil(font.lineHeight)),
+            kern: 0.1,
+            paragraphSpacing: 10,
+            bodyLineSpacing: 3,
+            headingTextColor: UIColor.label,
+            linkColor: UIColor.systemBlue,
+            inlineCodeTextColor: UIColor.secondaryLabel,
+            codeBlockTextColor: UIColor.label,
+            codeBlockHeaderTextColor: UIColor.secondaryLabel,
+            codeBlockBackgroundColor: UIColor.secondarySystemBackground,
+            tableTextColor: UIColor.label,
+            tableHeaderTextColor: UIColor.label,
+            tableBorderColor: UIColor.separator,
+            tableBackgroundColor: UIColor.secondarySystemBackground,
+            imagePlaceholderTextColor: UIColor.label,
+            imagePlaceholderBackgroundColor: UIColor.tertiarySystemBackground,
+            imagePlaceholderCaptionColor: UIColor.secondaryLabel,
+            horizontalRuleColor: UIColor.separator,
+            horizontalRuleLength: 24,
+            listItemSpacing: 10,
+            listIndentPerLevel: 16,
+            headingLineHeightMultiplier: 1.25
+        )
+    }
 
-    public static let compact = STMarkdownStyle(
-        font: UIFont.st_preferredFont(ofSize: 14, forTextStyle: .subheadline),
-        textColor: UIColor.label,
-        lineHeight: 20,
-        kern: 0.08,
-        paragraphSpacing: 6,
-        bodyLineSpacing: 1,
-        headingTextColor: UIColor.label,
-        linkColor: UIColor.systemBlue,
-        inlineCodeTextColor: UIColor.secondaryLabel,
-        codeBlockTextColor: UIColor.label,
-        codeBlockHeaderTextColor: UIColor.secondaryLabel,
-        codeBlockBackgroundColor: UIColor.secondarySystemBackground,
-        tableTextColor: UIColor.label,
-        tableHeaderTextColor: UIColor.label,
-        tableBorderColor: UIColor.separator,
-        tableBackgroundColor: UIColor.secondarySystemBackground,
-        imagePlaceholderTextColor: UIColor.label,
-        imagePlaceholderBackgroundColor: UIColor.tertiarySystemBackground,
-        imagePlaceholderCaptionColor: UIColor.secondaryLabel,
-        horizontalRuleColor: UIColor.separator,
-        horizontalRuleLength: 18,
-        listItemSpacing: 6,
-        listIndentPerLevel: 12,
-        headingLineHeightMultiplier: 1.18
-    )
+    public static var compact: STMarkdownStyle {
+        let font = UIFont.st_preferredFont(ofSize: 14, forTextStyle: .subheadline)
+        return STMarkdownStyle(
+            font: font,
+            textColor: UIColor.label,
+            lineHeight: max(20, ceil(font.lineHeight)),
+            kern: 0.08,
+            paragraphSpacing: 6,
+            bodyLineSpacing: 1,
+            headingTextColor: UIColor.label,
+            linkColor: UIColor.systemBlue,
+            inlineCodeTextColor: UIColor.secondaryLabel,
+            codeBlockTextColor: UIColor.label,
+            codeBlockHeaderTextColor: UIColor.secondaryLabel,
+            codeBlockBackgroundColor: UIColor.secondarySystemBackground,
+            tableTextColor: UIColor.label,
+            tableHeaderTextColor: UIColor.label,
+            tableBorderColor: UIColor.separator,
+            tableBackgroundColor: UIColor.secondarySystemBackground,
+            imagePlaceholderTextColor: UIColor.label,
+            imagePlaceholderBackgroundColor: UIColor.tertiarySystemBackground,
+            imagePlaceholderCaptionColor: UIColor.secondaryLabel,
+            horizontalRuleColor: UIColor.separator,
+            horizontalRuleLength: 18,
+            listItemSpacing: 6,
+            listIndentPerLevel: 12,
+            headingLineHeightMultiplier: 1.18
+        )
+    }
 }

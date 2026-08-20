@@ -196,7 +196,7 @@ private extension STMarkdownAttributedStringRenderer {
         case .literalMonospace:
             let trimmed = html.trimmingCharacters(in: .whitespacesAndNewlines)
             var attrs = self.baseAttributes()
-            attrs[.font] = UIFont.st_monospacedSystemFont(
+            attrs[.font] = UIFont.st_preferredMonospacedFont(
                 ofSize: max(self.style.font.pointSize - 2, 10),
                 weight: .regular
             )
@@ -393,7 +393,7 @@ private extension STMarkdownAttributedStringRenderer {
                 ))
             case .code(let code):
                 var codeAttributes = attributes
-                codeAttributes[.font] = UIFont.st_monospacedSystemFont(ofSize: max(baseFont.pointSize - 1, 12), weight: .regular)
+                codeAttributes[.font] = UIFont.st_preferredMonospacedFont(ofSize: max(baseFont.pointSize - 1, 12), weight: .regular)
                 codeAttributes[.foregroundColor] = self.style.inlineCodeTextColor ?? textColor
                 if let inlineBg = self.style.inlineCodeBackgroundColor {
                     codeAttributes[.backgroundColor] = inlineBg
@@ -473,7 +473,7 @@ private extension STMarkdownAttributedStringRenderer {
                     break
                 case .literalMonospace:
                     var monoAttrs = attributes
-                    monoAttrs[.font] = UIFont.st_monospacedSystemFont(ofSize: max(baseFont.pointSize - 2, 9), weight: .regular)
+                    monoAttrs[.font] = UIFont.st_preferredMonospacedFont(ofSize: max(baseFont.pointSize - 2, 9), weight: .regular)
                     monoAttrs[.foregroundColor] = (self.style.inlineCodeTextColor ?? textColor).withAlphaComponent(0.72)
                     result.append(NSAttributedString(string: raw, attributes: monoAttrs))
                 }
@@ -650,7 +650,7 @@ private extension STMarkdownAttributedStringRenderer {
             contentIndent = firstLineIndent + markerWidth + 5
             baselineOffset = 0
         } else if item.ordered {
-            markerFont = UIFont.st_monospacedDigitSystemFont(ofSize: self.style.font.pointSize, weight: .medium)
+            markerFont = UIFont.st_preferredMonospacedFont(ofSize: self.style.font.pointSize, weight: .medium)
             let orderedIndex = item.orderedIndex ?? 1
             markerText = "\(orderedIndex).\t"
             let markerWidth = ceil(("\(orderedIndex)." as NSString).size(withAttributes: [.font: markerFont]).width)

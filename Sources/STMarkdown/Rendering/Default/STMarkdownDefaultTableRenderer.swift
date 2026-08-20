@@ -128,7 +128,7 @@ private extension STMarkdownDefaultTableRenderer {
         } else if !isHeader, let f = style.tableFont {
             font = f
         } else {
-            font = UIFont.st_monospacedSystemFont(ofSize: max(style.font.pointSize - 1, 12), weight: isHeader ? .semibold : .regular)
+            font = UIFont.st_preferredMonospacedFont(ofSize: max(style.font.pointSize - 1, 12), weight: isHeader ? .semibold : .regular)
         }
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
@@ -144,7 +144,7 @@ private extension STMarkdownDefaultTableRenderer {
     }
 
     func renderSeparator(columnWidths: [Int], style: STMarkdownStyle) -> NSAttributedString {
-        let font = style.tableFont ?? UIFont.st_monospacedSystemFont(ofSize: max(style.font.pointSize - 1, 12), weight: .regular)
+        let font = style.tableFont ?? UIFont.st_preferredMonospacedFont(ofSize: max(style.font.pointSize - 1, 12), weight: .regular)
         let attributes: [NSAttributedString.Key: Any] = [
             .font: font,
             .foregroundColor: style.tableBorderColor ?? style.textColor.withAlphaComponent(0.55),

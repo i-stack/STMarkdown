@@ -22,7 +22,7 @@ public struct STMarkdownDefaultHorizontalRuleRenderer: STMarkdownHorizontalRuleR
             ?? style.dividerColor
             ?? style.textColor.withAlphaComponent(0.28)
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.st_systemFont(ofSize: max(style.font.pointSize - 2, 12), weight: .regular),
+            .font: UIFont.st_preferredFont(ofSize: max(style.font.pointSize - 2, 12), weight: .regular),
             .foregroundColor: color,
             .paragraphStyle: paragraphStyle,
         ]

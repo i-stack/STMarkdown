@@ -30,7 +30,7 @@ public final class STMarkdownFullHeightCodeBlockAttachment: NSTextAttachment {
         self.style = style
         self.contentInsets = style.codeBlockContentInsets
         let autoHeight = max(
-            ceil(UIFont.st_monospacedSystemFont(
+            ceil(UIFont.st_preferredMonospacedFont(
                 ofSize: max(style.font.pointSize - 2, 12),
                 weight: .semibold
             ).lineHeight),
@@ -100,11 +100,11 @@ public struct STMarkdownDynamicHeightCodeBlockRenderer: STMarkdownCodeBlockRende
         let backgroundColor = style.codeBlockBackgroundColor ?? UIColor.secondarySystemBackground
         let borderColor = style.codeBlockBorderColor ?? UIColor.separator
         let headerColor = style.codeBlockHeaderTextColor ?? style.textColor.withAlphaComponent(0.72)
-        let headerFont = UIFont.st_monospacedSystemFont(
+        let headerFont = UIFont.st_preferredMonospacedFont(
             ofSize: max(style.font.pointSize - 2, 12),
             weight: .semibold
         )
-        let codeFont = UIFont.st_monospacedSystemFont(
+        let codeFont = UIFont.st_preferredMonospacedFont(
             ofSize: max(style.font.pointSize - 1, 12),
             weight: .regular
         )

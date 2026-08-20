@@ -74,7 +74,7 @@ public final class STMarkdownCodeBlockAttachment: NSTextAttachment {
         let hasLanguage = self.language?.isEmpty == false
         if hasLanguage {
             let autoHeight = max(
-                ceil(UIFont.st_monospacedSystemFont(ofSize: max(style.font.pointSize - 2, 12), weight: .semibold).lineHeight),
+                ceil(UIFont.st_preferredMonospacedFont(ofSize: max(style.font.pointSize - 2, 12), weight: .semibold).lineHeight),
                 18
             )
             self.headerHeight = style.codeBlockHeaderHeight > 0 ? style.codeBlockHeaderHeight : autoHeight
@@ -82,7 +82,7 @@ public final class STMarkdownCodeBlockAttachment: NSTextAttachment {
             self.headerHeight = 0
         }
 
-        let codeFont = UIFont.st_monospacedSystemFont(
+        let codeFont = UIFont.st_preferredMonospacedFont(
             ofSize: max(style.font.pointSize - 1, 12),
             weight: .regular
         )
@@ -279,7 +279,7 @@ public struct STMarkdownCodeBlockRenderer: STMarkdownCodeBlockRendering {
         let backgroundColor = style.codeBlockBackgroundColor ?? UIColor.secondarySystemBackground
         let borderColor = style.codeBlockBorderColor ?? UIColor.separator
         let headerColor = style.codeBlockHeaderTextColor ?? style.textColor.withAlphaComponent(0.72)
-        let headerFont = UIFont.st_monospacedSystemFont(
+        let headerFont = UIFont.st_preferredMonospacedFont(
             ofSize: max(style.font.pointSize - 2, 12),
             weight: .semibold
         )
