@@ -21,15 +21,15 @@ public enum STMarkdownTypography {
     public static func headingFont(for level: Int) -> UIFont {
         switch level {
         case 1:
-            return UIFont.st_systemFont(ofSize: 22, weight: .bold)
+            return UIFont.st_preferredFont(ofSize: 22, forTextStyle: .title2, weight: .bold)
         case 2:
-            return UIFont.st_systemFont(ofSize: 20, weight: .semibold)
+            return UIFont.st_preferredFont(ofSize: 20, forTextStyle: .title3, weight: .semibold)
         case 3:
-            return UIFont.st_systemFont(ofSize: 18, weight: .semibold)
+            return UIFont.st_preferredFont(ofSize: 18, forTextStyle: .headline, weight: .semibold)
         case 4:
-            return UIFont.st_systemFont(ofSize: 16, weight: .semibold)
+            return UIFont.st_preferredFont(ofSize: 16, forTextStyle: .headline, weight: .semibold)
         default:
-            return UIFont.st_systemFont(ofSize: 15, weight: .semibold)
+            return UIFont.st_preferredFont(ofSize: 15, forTextStyle: .subheadline, weight: .semibold)
         }
     }
 
@@ -111,15 +111,15 @@ public enum STMarkdownListStyleResolver {
             switch level {
             case 0:
                 markerText = "\t●\t"
-                markerFont = UIFont.st_systemFont(ofSize: unorderedLevel0Size, weight: .regular)
+                markerFont = UIFont.st_preferredFont(ofSize: unorderedLevel0Size, forTextStyle: .body)
                 contentIndent = markerIndent + unorderedLevel0Size + unorderedLevel0Spacing
             case 1:
                 markerText = "\t○\t"
-                markerFont = UIFont.st_systemFont(ofSize: unorderedLevel1Size, weight: .regular)
+                markerFont = UIFont.st_preferredFont(ofSize: unorderedLevel1Size, forTextStyle: .body)
                 contentIndent = markerIndent + unorderedLevel1Size + unorderedLevel1Spacing
             default:
                 markerText = "\t▪\t"
-                markerFont = UIFont.st_systemFont(ofSize: unorderedLevelDefaultSize, weight: .regular)
+                markerFont = UIFont.st_preferredFont(ofSize: unorderedLevelDefaultSize, forTextStyle: .body)
                 contentIndent = markerIndent + unorderedLevelDefaultSize + unorderedLevelDefaultSpacing
             }
             let baseMidline = (baseFont.ascender + baseFont.descender) / 2

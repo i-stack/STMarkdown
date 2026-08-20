@@ -32,7 +32,7 @@ public enum STMarkdownPresets {
     }
 
     public static let article = STMarkdownStyle(
-        font: UIFont.st_systemFont(ofSize: 17, weight: .regular),
+        font: UIFont.st_preferredFont(ofSize: 17, forTextStyle: .body),
         textColor: UIColor.label,
         lineHeight: 26,
         kern: 0.1,
@@ -59,7 +59,7 @@ public enum STMarkdownPresets {
     )
 
     public static let compact = STMarkdownStyle(
-        font: UIFont.st_systemFont(ofSize: 14, weight: UIFont.Weight.regular),
+        font: UIFont.st_preferredFont(ofSize: 14, forTextStyle: .subheadline),
         textColor: UIColor.label,
         lineHeight: 20,
         kern: 0.08,

@@ -19,10 +19,10 @@ public struct STMarkdownLineNumberEntry {
 /// 行号绘制视图，通过 `update(entries:font:color:rightInset:)` 驱动，无主题系统依赖。
 public final class STMarkdownLineNumberDrawView: UIView {
     private var entries: [STMarkdownLineNumberEntry] = []
-    private var drawFont: UIFont = UIFont.st_monospacedSystemFont(ofSize: 12, weight: .regular)
+    private var drawFont: UIFont = UIFont.st_preferredMonospacedFont(ofSize: 12, forTextStyle: .caption1)
     private var drawColor: UIColor = .systemGray
     private var rightInset: CGFloat = 6
-    private var lineHeight: CGFloat = UIFont.st_monospacedSystemFont(ofSize: 12, weight: .regular).lineHeight
+    private var lineHeight: CGFloat = UIFont.st_preferredMonospacedFont(ofSize: 12, forTextStyle: .caption1).lineHeight
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

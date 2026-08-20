@@ -163,7 +163,8 @@ open class STMarkdownCodeSheetViewController: UIViewController {
         let label = UILabel()
         label.text = self.headerTitle
         label.lineBreakMode = .byTruncatingTail
-        label.font = UIFont.st_systemFont(ofSize: 14, weight: .semibold)
+        label.font = UIFont.st_preferredFont(ofSize: 14, forTextStyle: .subheadline, weight: .semibold)
+        label.adjustsFontForContentSizeCategory = true
         return label
     }()
 

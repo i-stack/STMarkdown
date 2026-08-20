@@ -43,7 +43,7 @@ public enum STMarkdownMermaidAttachmentFactory {
             bgColor.setFill()
             UIBezierPath(roundedRect: rect, cornerRadius: cornerRadius).fill()
             let attrs: [NSAttributedString.Key: Any] = [
-                .font: UIFont.systemFont(ofSize: 13),
+                .font: UIFont.st_preferredFont(ofSize: 13, forTextStyle: .footnote),
                 .foregroundColor: UIColor.secondaryLabel,
             ]
             let textSize = (loadingText as NSString).size(withAttributes: attrs)

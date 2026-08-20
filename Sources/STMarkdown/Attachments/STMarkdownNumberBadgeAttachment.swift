@@ -120,7 +120,12 @@ private extension STMarkdownNumberBadgeAttachment {
 
         let size = CGSize(width: diameter, height: diameter)
         let ratio: CGFloat = number.count <= 1 ? 11.0 / 18.0 : (number.count == 2 ? 10.0 / 18.0 : 9.0 / 18.0)
-        let badgeFont = UIFont.st_systemFont(ofSize: diameter * ratio, weight: .semibold)
+        let badgeFont = UIFont.st_preferredFont(
+            ofSize: diameter * ratio,
+            forTextStyle: .caption2,
+            weight: .semibold,
+            maxSize: diameter * ratio * 1.4
+        )
         let textAttributes: [NSAttributedString.Key: Any] = [
             .font: badgeFont,
             .foregroundColor: textColor,

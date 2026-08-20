@@ -23,9 +23,9 @@ public final class STMarkdownCodeContentView: UIView, UITextViewDelegate {
     private var currentLineNumberColor: UIColor = UIColor.secondaryLabel
 
     /// 可替换的代码字体
-    public var codeFont: UIFont = UIFont.st_monospacedSystemFont(ofSize: 14, weight: .regular)
+    public var codeFont: UIFont = UIFont.st_preferredMonospacedFont(ofSize: 14, forTextStyle: .body)
     /// 可替换的行号字体
-    public var lineNumberFont: UIFont = UIFont.st_monospacedSystemFont(ofSize: 12, weight: .regular)
+    public var lineNumberFont: UIFont = UIFont.st_preferredMonospacedFont(ofSize: 12, forTextStyle: .caption1)
 
     public override init(frame: CGRect) {
         super.init(frame: frame)

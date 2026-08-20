@@ -149,7 +149,8 @@ open class STMarkdownTableView: UIView {
 
     private func setupHeader() {
         self.titleLabel.text = self.style.tableTitleText ?? "表格"
-        self.titleLabel.font = self.style.tableTitleFont ?? UIFont.st_systemFont(ofSize: 14, weight: .medium)
+        self.titleLabel.font = self.style.tableTitleFont ?? UIFont.st_preferredFont(ofSize: 14, forTextStyle: .subheadline, weight: .medium)
+        self.titleLabel.adjustsFontForContentSizeCategory = true
 
         let items = self.style.tableHeaderItems?.isEmpty == false
             ? self.style.tableHeaderItems!
@@ -247,7 +248,8 @@ open class STMarkdownTableView: UIView {
         self.headerBar.backgroundColor = headerBg
         self.headerSeparator.backgroundColor = borderColor
         self.titleLabel.textColor = secondaryColor
-        self.titleLabel.font = self.style.tableTitleFont ?? UIFont.st_systemFont(ofSize: 14, weight: .medium)
+        self.titleLabel.font = self.style.tableTitleFont ?? UIFont.st_preferredFont(ofSize: 14, forTextStyle: .subheadline, weight: .medium)
+        self.titleLabel.adjustsFontForContentSizeCategory = true
         self.titleLabel.text = self.style.tableTitleText ?? "表格"
         for (_, button) in self.headerButtons {
             button.tintColor = secondaryColor

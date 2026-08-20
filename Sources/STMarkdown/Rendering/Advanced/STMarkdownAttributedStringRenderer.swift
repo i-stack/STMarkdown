@@ -207,7 +207,7 @@ private extension STMarkdownAttributedStringRenderer {
 
     func renderCodeBlock(language: String?, code: String) -> NSAttributedString {
         let attributes: [NSAttributedString.Key: Any] = [
-            .font: UIFont.st_monospacedSystemFont(ofSize: 14, weight: .regular),
+            .font: UIFont.st_preferredMonospacedFont(ofSize: 14, forTextStyle: .body),
             .foregroundColor: self.style.textColor,
             .paragraphStyle: self.bodyParagraphStyle(),
         ]
@@ -615,15 +615,15 @@ private extension STMarkdownAttributedStringRenderer {
         }
         switch level {
         case 1:
-            return .st_systemFont(ofSize: 22, weight: .bold)
+            return .st_preferredFont(ofSize: 22, forTextStyle: .title2, weight: .bold)
         case 2:
-            return .st_systemFont(ofSize: 20, weight: .semibold)
+            return .st_preferredFont(ofSize: 20, forTextStyle: .title3, weight: .semibold)
         case 3:
-            return .st_systemFont(ofSize: 18, weight: .semibold)
+            return .st_preferredFont(ofSize: 18, forTextStyle: .headline, weight: .semibold)
         case 4:
-            return .st_systemFont(ofSize: 17, weight: .semibold)
+            return .st_preferredFont(ofSize: 17, forTextStyle: .headline, weight: .semibold)
         default:
-            return .st_systemFont(ofSize: 16, weight: .medium)
+            return .st_preferredFont(ofSize: 16, forTextStyle: .subheadline, weight: .medium)
         }
     }
 
@@ -644,7 +644,7 @@ private extension STMarkdownAttributedStringRenderer {
 
         if let checkbox = item.checkbox {
             let checkboxMarker = checkbox == .checked ? "☑ " : "☐ "
-            markerFont = .st_systemFont(ofSize: self.style.font.pointSize, weight: .regular)
+            markerFont = .st_preferredFont(ofSize: self.style.font.pointSize, forTextStyle: .body)
             markerText = "\(checkboxMarker)\t"
             let markerWidth = ceil((checkboxMarker as NSString).size(withAttributes: [.font: markerFont]).width)
             contentIndent = firstLineIndent + markerWidth + 5
@@ -665,7 +665,7 @@ private extension STMarkdownAttributedStringRenderer {
             }
             markerText = "\(bulletSymbol)\t"
             let bulletSize = max(round(self.style.font.pointSize * 0.44), 5)
-            markerFont = .st_systemFont(ofSize: bulletSize, weight: .regular)
+            markerFont = .st_preferredFont(ofSize: bulletSize, forTextStyle: .body)
             contentIndent = firstLineIndent + self.style.listMarkerWidth
             let baseMidline = (self.style.font.ascender + self.style.font.descender) / 2
             let markerMidline = (markerFont.ascender + markerFont.descender) / 2

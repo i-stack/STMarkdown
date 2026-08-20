@@ -326,7 +326,7 @@ public final class STMarkdownTableViewModel {
             bgColor.setFill()
             UIBezierPath(ovalIn: CGRect(x: 0, y: 0, width: diameter, height: diameter)).fill()
             let attrs: [NSAttributedString.Key: Any] = [
-                .font: UIFont.systemFont(ofSize: 9, weight: .semibold),
+                .font: UIFont.st_preferredFont(ofSize: 9, forTextStyle: .caption2, weight: .semibold, maxSize: 13),
                 .foregroundColor: style.citationBadgeTextColor ?? UIColor.white,
             ]
             let textSize = (number as NSString).size(withAttributes: attrs)

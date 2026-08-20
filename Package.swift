@@ -15,8 +15,8 @@ let package = Package(
         ),
     ],
     dependencies: [
-        // 发布时改为远程仓库：
-        // .package(url: "https://github.com/i-stack/STBaseProject.git", from: "1.6.0")
+        // 发布时需依赖包含新版字体 API 的 STBaseProject 2.0 或更高版本：
+        // .package(url: "https://github.com/i-stack/STBaseProject.git", from: "2.0.0")
         .package(name: "STBaseProject", path: "../STBaseProject"),
         .package(url: "https://github.com/swiftlang/swift-markdown.git", from: "0.8.0"),
         .package(url: "https://github.com/mgriebling/SwiftMath.git", revision: "48ff188ba118c37d024551238041113560ab09b9")

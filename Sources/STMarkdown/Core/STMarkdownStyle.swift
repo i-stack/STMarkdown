@@ -315,7 +315,7 @@ public struct STMarkdownStyle: @unchecked Sendable {
     }
 
     public static let `default` = STMarkdownStyle(
-        font: UIFont.st_systemFont(ofSize: 16, weight: .regular),
+        font: UIFont.st_preferredFont(ofSize: 16, forTextStyle: .body),
         textColor: .label,
         lineHeight: 24,
         kern: 0.12
@@ -371,7 +371,7 @@ public enum STMarkdownFontResolver {
                 return resolved
             }
         }
-        return .st_systemFont(ofSize: font.pointSize, weight: .bold)
+        return .st_preferredFont(ofSize: font.pointSize, forTextStyle: .body, weight: .bold)
     }
 
     public static func boldItalicFont(from font: UIFont) -> UIFont {

@@ -83,7 +83,8 @@ final class STMarkdownTableActionMenu: UIView {
 
             let titleLabel = UILabel()
             titleLabel.text = item.title
-            titleLabel.font = UIFont.st_systemFont(ofSize: 16, weight: .regular)
+            titleLabel.font = UIFont.st_preferredFont(ofSize: 16, forTextStyle: .body)
+            titleLabel.adjustsFontForContentSizeCategory = true
             titleLabel.textColor = textColor
             titleLabel.frame = CGRect(x: 18, y: 0, width: self.cardWidth - 18 - 48, height: self.rowHeight)
             row.addSubview(titleLabel)
